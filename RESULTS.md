@@ -65,10 +65,10 @@ it finds and fixes the planted flaw. On the billing case it exhausts its
 budget without fixing the rounding and overdraft flaws in 5 runs out of 5.
 Generalization is real but bounded, which is exactly the claim we make.
 
-### Verified live in production, Nov 23
+### Verified live in production, Nov 23 (plumbing verified; model layer was rehearsal)
 
-After fixing the hosted engine (see "rehearsal mode" below), a live hosted
-verdict on `multi-tenant-auth` ran the full adversarial loop:
+After fixing the hosted engine (see "rehearsal mode" below), a hosted
+verdict on `multi-tenant-auth` verified the production path:
 
 - Triage failed the flawed artifact and escalated to the courtroom. A
   rubber-stamp pass is no longer possible.
@@ -78,6 +78,16 @@ verdict on `multi-tenant-auth` ran the full adversarial loop:
   by execution.
 - The proponent fixed both flaws (defend plus edit) and re-ran the suite.
 - Claims verified. `resolved-verified` in 40 calls over 26 rounds.
+
+Honest correction, added Nov 24: the test account that ran this had no
+BYOK provider configured, so the model layer of that run was the scripted
+rehearsal brain, not a live model. What the run genuinely verified: the
+real sandboxed tool layer (files really read, tests really written and
+executed), the escalation logic, the sealed hidden standard, and the verdict
+recording path. What it did not verify: a live model through the hosted
+path. The live-model hosted run fills in below when it closes.
+
+<!-- HOSTED_LIVE_MODEL_VERIFICATION -->
 
 ## Measured: token efficiency (Nov 23)
 
