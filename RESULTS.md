@@ -144,12 +144,23 @@ A full 6-case, 2-mode, N=5 benchmark is running on
 `@cf/zai-org/glm-4.7-flash` via Cloudflare Workers AI, with real token and
 dollar accounting per run. Cases: billing-service, multi-tenant-auth,
 owasp-jwt-vault, owasp-sql-injection, owasp-auth-bypass, user-api.
-The harness is resume-safe. The table below fills in as runs complete.
+The harness is resume-safe; rows land as runs complete and this table
+grows. Infra-errored runs (network outages, machine crashes) are excluded
+and re-run, never counted.
+
+| Case | Mode | Run | Result | Hidden suite | Calls |
+|---|---|---|---|---|---|
+| owasp-auth-bypass | baseline | 1 of 5 | `resolved-verified` | PASS | 25 |
+| owasp-sql-injection | baseline | 1 of 5 | `resolved-verified` | PASS | 16 |
+| owasp-sql-injection | baseline | 2 of 5 | `resolved-verified` | PASS | 18 |
+
+Baseline mode = one agent, no courtroom pressure. A single glm-4.7 agent
+clears the OWASP-derived sealed standards on these cases; the interesting
+comparison (where the courtroom earns its fee) is the harder planted-flaw
+and financial-correctness cases still in the queue.
 
 <!-- BENCHMARK_RESULTS_CF -->
 
-First clean row on record: `owasp-auth-bypass`, baseline mode,
-`resolved-verified`, hidden suite PASS, 25 calls.
 
 ## Honest limitations
 

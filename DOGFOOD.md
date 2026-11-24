@@ -34,7 +34,8 @@ node --experimental-strip-types packages/cli/src/index.ts run cases/zyntry-self/
 
 | Date | Engine reviewed | Provider | Verdict | Calls | Claims | Fixes |
 |---|---|---|---|---|---|---|
-| Nov 23, 2026 | `dbef8c5`, react-protocol fix, token caps, Workers AI provider support | `@cf/zai-org/glm-4.7-flash` (Cloudflare Workers AI) | `unresolved`, harness defect found | 33 | 22 raised, 3 disputed, 0 verified | 0 |
+| Nov 23, 2026 | `dbef8c5`, react-protocol fix, token caps, Workers AI provider support | `@cf/zai-org/glm-4.7-flash` | `unresolved`, harness defect found | 33 | 22 raised, 3 disputed, 0 verified | 0 |
+| Nov 24, 2026 | `1c46aa6` + sandbox filter + container fixes | `@cf/zai-org/glm-4.7-flash` | `unresolved`, second harness timeout caught | 32 | 9 raised, 2 open objections | 0 |
 
 What the first run caught was a harness bug, which is the dogfood working.
 The court refused to certify the engine because the sealed standard kept
@@ -42,8 +43,16 @@ failing. Manual reproduction showed why: the standard's launcher was killing
 the engine suite at a 55-second timeout, and the suite needs 60 to 90
 seconds. The engine's own 103 tests were green. The dogfood wiring was
 broken, and the courtroom surfaced it instead of silently passing.
-Timeouts were fixed in commit `d575d61`. A fresh run is in flight and its
-record replaces the row above when it closes.
+
+The second run caught a second timeout bug the same way: with the first cap
+raised, the sealed suite ran under heavy machine load and was killed at
+240 seconds with zero output. Manual runs show the suite passes 88 of 88 in
+about 50 seconds warm. Both caps are now 480 and 600 seconds
+(commit `c58e512`). The court refused certification twice, correctly both
+times: the standard itself kept failing, and it was the harness, not the
+engine. That is what a sealed standard is supposed to do.
+
+A clean-window run to completion is queued behind the benchmark tracks.
 
 The committed case record, meaning the full transcript of every proposal,
 rejection, claim, evidence record and hidden-suite execution, lands in
