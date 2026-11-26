@@ -5,10 +5,16 @@ adversarial agents (investigator, proponent, challenger) examine AI-written
 code. Every claim needs a failing test to prove it. The standard is sealed:
 agents can neither read nor run the tests that judge them.
 
-Try it:
+Try it on a demo case:
 
-    npx zyntry-verdict signup
-    npx zyntry-verdict run multi-tenant-auth
+    npx zyntry-verdict@latest signup
+    npx zyntry-verdict@latest run multi-tenant-auth
+
+Or point the courtroom at YOUR repo:
+
+    cd your-repo
+    npx zyntry-verdict@latest init     # scans the repo, generates .zyntry.case.json
+    npx zyntry-verdict@latest run      # submits your code; the court reviews it live
 
 Live gateway: https://verdict.zyntry.space
 Full docs: https://zyntry.space/products/zyntry-verdict/docs
@@ -23,3 +29,4 @@ Full docs: https://zyntry.space/products/zyntry-verdict/docs
   sandbox review, and every gap that was fixed.
 
 The engine itself is private. These are the records we publish.
+
