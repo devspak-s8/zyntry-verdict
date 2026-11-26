@@ -23,6 +23,16 @@ alone. Courtroom is three roles: investigator, proponent, challenger.
 | `owasp-jwt-vault` | security | Third-party derived. Each hidden test cites the OWASP JWT Security Cheat Sheet or the OWASP API Top 10 |
 | `billing-service` | correctness | Planted (rounding, overdraft) |
 | `user-api` | validation | Planted (input validation) |
+| `infra-policy` | **infrastructure** | CIS Controls v8 derived: remote-admin restriction (Control 4), data protection (Control 3), least-privilege IAM (Control 6), modern TLS enforcement. An AI-generated production cloud config whose own sanity suite passes while the sealed standard catches SSH open to the internet, unencrypted storage, owner/editor service accounts, and unenforced HTTPS |
+| `data-analysis` | **statistics** | Sealed statistical standard: averages over paying customers only, unrounded growth ratios, conversion ranked by rate not count. An AI-generated revenue module whose public checks pass while the standard catches denominator dilution (28.5% understatement), round-before-divide growth loss, and the segment-count trap |
+
+The last two rows are the generalization made demonstrated rather than
+claimed: the same courtroom, the same sealed-standard machinery, the same
+adversarial loop, pointed at infrastructure configuration and statistical
+analysis instead of code. The engine never touches code — it speaks actions,
+evidence, claims and verdicts; the domains live in the tool surfaces and the
+standards. AI-generated infrastructure and AI-generated analysis are now
+under the same court.
 
 ### OWASP provenance mapping (`owasp-jwt-vault`)
 
