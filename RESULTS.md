@@ -155,6 +155,15 @@ back with the running verdict's row in 7 seconds.
 If a verification gateway can deadlock on its own request routing, anything
 can. The bug was found by exercising the product the way an agent would.
 
+The same smoke run exposed a second design flaw: an evaluation tool call
+that blocks until every verdict finishes loses its snapshot when the
+client times out, even though the verdicts themselves complete on the
+court's watchdog. Evaluations now persist their run list before and during
+the batch, and the before/after aggregate is always computed live from the
+verdicts table — nothing about a measurement depends on the client that
+started it surviving. A `zyntry_list_verdicts` tool completes the
+recovery path for interrupted submissions.
+
 ## Model bake-off on Cloudflare Workers AI (Nov 23)
 
 Same engine, same prompts, live OpenAI-compatible endpoint:
