@@ -134,6 +134,27 @@ correct `expectation: "fail"` flaw claim against a planted
 Single-model self-verification fails quietly. The infrastructure has to
 assume models fail in creative ways.
 
+## Found: the MCP surface deadlocking itself (Nov 28)
+
+While smoke-testing the new evaluation tools against production, we found
+that three of the original ten MCP tools returned `error code: 522` for
+every call. `zyntry_get_verdict`, `zyntry_submit_run` and
+`zyntry_verify_and_fix` all routed through a Worker subrequest to the
+gateway's own public URL. Cloudflare can serve that subrequest on the same
+isolate that is still busy awaiting it, which deadlocks until the proxy
+times out. The failure was already documented on one handler's comment as
+a known hazard; those three tools predated the finding and never got the
+same treatment.
+
+The fix (commit `2ac2f7d`): a shared `startVerdict` function now starts
+verdicts in-process for both the HTTP route and every MCP submit path, and
+`zyntry_get_verdict` reads the database directly. Zero self-fetches remain
+in the MCP surface. Verified live: the same call that returned 522 came
+back with the running verdict's row in 7 seconds.
+
+If a verification gateway can deadlock on its own request routing, anything
+can. The bug was found by exercising the product the way an agent would.
+
 ## Model bake-off on Cloudflare Workers AI (Nov 23)
 
 Same engine, same prompts, live OpenAI-compatible endpoint:
